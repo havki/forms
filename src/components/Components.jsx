@@ -1,4 +1,5 @@
-import EmailIcon from '@mui/icons-material/Email';import {
+import EmailIcon from '@mui/icons-material/Email';
+import {
   Box,
   Button,
   Checkbox,
