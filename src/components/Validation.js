@@ -3,7 +3,6 @@
 export const nameValidate = {
   required:REQUIRED_FIELD,
   validate:(value)=>{
-    console.log(value);
     if(value.match(/[а-яА-Я]/)){
       return 'Логин не может содержать русские буквы'
     }
@@ -30,4 +29,17 @@ export const emailValidate = {
 
 export const selectValidate = { 
   required: "Выберите что-нибудь"
+}
+
+export const textValidate = {
+  required: REQUIRED_FIELD,
+  maxLength: {
+    value: 5,
+    message: "Текст не более 200 символов"
+  }
+}
+
+export const dateValidate = {
+  required: 'Выберите дату'
+  
 }

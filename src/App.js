@@ -2,16 +2,20 @@ import logo from "./logo.svg";
 import "./App.css";
 import {
   Box,
+  Button,
   Checkbox,
   Container,
   FormControl,
   FormControlLabel,
   FormGroup,
   FormHelperText,
+  FormLabel,
   Grid,
   InputAdornment,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
@@ -24,8 +28,11 @@ import {
   nameValidate,
   emailValidate,
   selectValidate,
+  textValidate,
+  dateValidate,
 } from "./components/Validation";
 import EmailIcon from "@mui/icons-material/Email";
+import BasicDatePicker from "./components/date/Date";
 
 function App() {
   const {
@@ -168,45 +175,150 @@ function App() {
                 >
                   Checkbox
                 </Typography>
-                <div className="flex">
+
+                <FormControl error={true}>
+                  <FormLabel sx={{ textAlign: "left" }} component="legend">
+                    Дополнительно
+                  </FormLabel>
                   <FormGroup row>
-                    {
-                      ['1','2','3'].map((item)=>{
-                        return(
-
-                          <Controller
-                            rules={{ required: false }}
-                            name={`cb${item}`}
-                            control={control}
-                            defaultValue={!!false}
-                            className="materialUIInput"
-                            render={({ field }) => (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={field.value || ""}
-                                    onChange={(e) => field.onChange(e)}
-                                    defaultChecked
-                                  />
-                                }
-                                label="Label"
-                              />
-                            )}
-                          />
-
-                        )
-
-                      })
-
-
-                    }
-                   
-                   
+                    {["1", "2", "3"].map((item) => {
+                      return (
+                        <Controller
+                          // rules={{ required: false }}
+                          name={`cb${item}`}
+                          control={control}
+                          defaultValue={!!false}
+                          className="materialUIInput"
+                          render={({ field }) => (
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={field.value || ""}
+                                  onChange={(e) => field.onChange(e)}
+                                  defaultChecked
+                                />
+                              }
+                              label="Label"
+                            />
+                          )}
+                        />
+                      );
+                    })}
                   </FormGroup>
-                </div>
+
+                  <FormHelperText>Выберите два</FormHelperText>
+                </FormControl>
               </div>
 
-              <button type="submit">asd</button>
+              <div className="label">
+                <Typography
+                  align="left"
+                  variant="subtitle1"
+                  gutterBottom
+                  component="div"
+                >
+                  Textarea
+                </Typography>
+                <Controller
+                  rules={textValidate}
+                  name="text"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      name="description"
+                      id="outlined-textarea"
+                      label="Textarea"
+                      minRows={4}
+                      multiline
+                      onChange={(e) => field.onChange(e)}
+                      value={field.value || ""}
+                      error={!!errors.text?.message}
+                      helperText={errors.text?.message}
+                    />
+                  )}
+                />
+              </div>
+              <div className="label">
+                <Typography
+                  align="left"
+                  variant="subtitle1"
+                  gutterBottom
+                  component="div"
+                >
+                  Radio
+                </Typography>
+                <Controller
+                  rules={{ required: "Выберите что-то" }}
+                  name="radioGroup"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <FormControl
+                      error={!!errors.radioGroup?.message}
+                      variant="standard"
+                    >
+                      <FormLabel
+                        sx={{ textAlign: "left" }}
+                        id="demo-error-radios"
+                      >
+                        Ваш пол
+                      </FormLabel>
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        value={field.value}
+                        onChange={(e) => field.onChange(e)}
+                      >
+                        <FormControlLabel
+                          value="Label 1"
+                          control={<Radio />}
+                          label="Label 1"
+                        />
+                        <FormControlLabel
+                          value="Label 2"
+                          control={<Radio />}
+                          label="Label 2"
+                        />
+                        <FormControlLabel
+                          value="Label 3"
+                          control={<Radio />}
+                          label="Label 3"
+                        />
+                      </RadioGroup>
+                      {errors.radioGroup && (
+                        <FormHelperText>
+                          {errors.radioGroup?.message}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  )}
+                />
+              </div>
+              <div className="label">
+                <Typography
+                  align="left"
+                  variant="subtitle1"
+                  gutterBottom
+                  component="div"
+                >
+                  Date
+                </Typography>
+                <Controller
+                  rules={dateValidate}
+                  control={control}
+                  name="date"
+                  defaultValue=""
+                  render={({ field }) => <BasicDatePicker field={field} errors={errors} />}
+                />
+              </div>
+
+              <div className="label">
+                <Button variant="outlined" type="submit" size="large">
+                  Submit button
+                </Button>
+              </div>
             </Stack>
           </form>
         </Box>
@@ -237,3 +349,51 @@ export default App;
 //    </>
 //   );
 // })}
+
+// <Controller
+//   rules={{ required: "Выберите что-то" }}
+//   name="checkbox"
+//   control={control}
+//   defaultValue=""
+//   render={({ field }) => (
+//     <FormControl
+//       error={!!errors.radioGroup?.message}
+//       variant="standard"
+//     >
+//       <FormLabel
+//         sx={{ textAlign: "left" }}
+//         id="demo-error-radios"
+//       >
+//         Ваш пол
+//       </FormLabel>
+//       <FormGroup
+//         row
+//         aria-labelledby="demo-row-radio-buttons-group-label"
+//         name="row-radio-buttons-group"
+//         value={field.value}
+//         onChange={(e) => field.onChange(e)}
+//       >
+//         <FormControlLabel
+//           value="Label 1"
+//           control={<Radio />}
+//           label="Label 1"
+//         />
+//         <FormControlLabel
+//           value="Label 2"
+//           control={<Radio />}
+//           label="Label 2"
+//         />
+//         <FormControlLabel
+//           value="Label 3"
+//           control={<Radio />}
+//           label="Label 3"
+//         />
+//       </FormGroup>
+//       {errors.radioGroup && (
+//         <FormHelperText>
+//           {errors.radioGroup?.message}
+//         </FormHelperText>
+//       )}
+//     </FormControl>
+//   )}
+// />
