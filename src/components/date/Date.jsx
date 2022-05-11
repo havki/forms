@@ -28,7 +28,13 @@ import { DesktopDatePicker } from "@mui/x-date-pickers";
               label="Введите дату"
               value={field.value}
               onChange={(e) => field.onChange(e)}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => 
+              <TextField 
+                {...params} 
+                name="date"
+                error= {!!errors.date?.message}
+                
+              />}
               inputFormat = "dd/MM/yyyy"
             />
             <FormHelperText sx={{ color: "red" }}>
