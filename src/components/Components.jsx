@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import CheckboxLabels from "./checkboxes/Checkbox";
-import ControlledCheckbox from "./checkboxes/Checkbox";
 import "./Components.css";
 import BasicDatePicker from './date/Date';
 // import BasicDatePicker from "./date/Date";

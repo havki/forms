@@ -34,12 +34,53 @@ export const selectValidate = {
 export const textValidate = {
   required: REQUIRED_FIELD,
   maxLength: {
-    value: 5,
+    value: 200,
     message: "Текст не более 200 символов"
   }
 }
 
 export const dateValidate = {
-  required: 'Выберите дату'
+  required: 'Выберите дату',
+  validate:(value)=>{
+    console.log(value);
+    const selectedDate = Date.parse(value);
+    
+    
+    if( selectedDate < (Date.now())){
+      
+      return "Выберите дату наперёд"
+    }
+   
+    // console.log(selectedDate,Date.now());
+    return true
+  },
   
 }
+
+export const cbValidate  = {
+  validate:(value)=>{
+    if(value.length < 2){
+      return 'Выберите два'
+    }
+    return true
+  },
+}
+
+
+// var myDate = Date.parse("Thu May 12 2022");
+//     const selectedDate = Date.parse(value);
+
+//      let rounded =  myDate * 0.00001 
+//      console.log(new Date(rounded));
+//      console.log(myDate +"="+rounded + '='+ selectedDate);
+
+//     // console.log(selectedDate, Date.parse(myDate));
+    
+//     // let some = Date.now()-diff;
+//     // console.log(some);
+    
+//     let diff = 0
+//     if(selectedDate < Date.now()){
+//       diff = Date.now()- selectedDate;
+//       // console.log('выбраная дата меньше на '+diff + ' c');
+//     }

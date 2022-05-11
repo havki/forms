@@ -1,9 +1,9 @@
 import { TextField, Typography } from '@mui/material'
 import React from 'react'
-import { Controller, useForm } from 'react-hook-form';
-import { nameValidate } from '../Validation';
+import { Controller } from 'react-hook-form'
+import { textValidate } from '../Validation'
 
-function Name ({control,errors}) {
+function Text({control,errors}) {
   return (
     <div className="label">
     <Typography
@@ -12,24 +12,24 @@ function Name ({control,errors}) {
       gutterBottom
       component="div"
     >
-      Input Field
+      Textarea
     </Typography>
-
     <Controller
-      rules={nameValidate}
-      name="firstName"
+      rules={textValidate}
+      name="text"
       control={control}
       defaultValue=""
-      className="materialUIInput"
       render={({ field }) => (
         <TextField
-          name="name"
+          name="description"
           id="outlined-textarea"
-          label="Your name"
+          label="Textarea"
+          minRows={4}
+          multiline
           onChange={(e) => field.onChange(e)}
           value={field.value || ""}
-          error={!!errors.firstName?.message}
-          helperText={errors.firstName?.message}
+          error={!!errors.text?.message}
+          helperText={errors.text?.message}
         />
       )}
     />
@@ -37,4 +37,4 @@ function Name ({control,errors}) {
   )
 }
 
-export default Name
+export default Text
