@@ -13,3 +13,6 @@
   justify-content:center;
   max-width:100%;
 }
+.MuiInputBase-root {
+  background-color: #fff
+}

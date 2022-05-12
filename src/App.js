@@ -1,31 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  FormLabel,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { components } from "./components/Components";
-import { Controller, useForm } from "react-hook-form";
+import { Box, Button, Container, Stack } from "@mui/material";
+import { useForm } from "react-hook-form";
 import Name from "./components/name/Name";
 import Select from "./components/select/Select";
-import { textValidate, dateValidate } from "./components/Validation";
-import EmailIcon from "@mui/icons-material/Email";
 import Email from "./components/e-mail/Email";
 import BasicDatePicker from "./components/date/Date";
 import CheckboxLabels from "./components/checkboxes/Checkbox";
@@ -58,15 +35,19 @@ function App() {
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
+
+
   };
+
+  
+ 
   return (
     <div className="App">
-      <Container maxWidth="xl" disableGutters>
-        {/* background.default */}
+      <Container  maxWidth="xl" disableGutters>
         <Box
           sx={{
             component: "form",
-            bgcolor: "default.background",
+            bgcolor: '#F9FAFC',
             height: "100%",
             display: "flex",
             flexDirection: "row",
@@ -105,7 +86,7 @@ function App() {
 
               <NewFieldInput callback={createInput} create={setName} />
               <div className="label">
-                <Button variant="outlined" type="submit" size="large">
+                <Button variant="contained" sx={{borderRadius:'50px'}} type="submit" size="large">
                   Submit button
                 </Button>
               </div>

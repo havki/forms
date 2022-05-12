@@ -29,6 +29,7 @@ function NewFieldInput({ callback }) {
         value={value.name}
         onChange={(e) => setValue({name: e.target.value})}
         
+        
       />
       <Button
         size="small"

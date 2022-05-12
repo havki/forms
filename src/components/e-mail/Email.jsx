@@ -1,7 +1,9 @@
-import { TextField, Typography } from "@mui/material";
+import { IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
 import { emailValidate } from "../Validation";
+import EmailIcon from "@mui/icons-material/Email";
+
 
 function Email({ control, errors }) {
   return (
@@ -25,6 +27,15 @@ function Email({ control, errors }) {
             value={field.value || ""}
             error={!!errors.email?.message}
             helperText={errors.email?.message}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <IconButton >
+                    <EmailIcon/>
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         )}
       />
