@@ -6,3 +6,10 @@
   display: flex ;
   justify-content: space-around;
 }
+
+.label{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  max-width:100%;
+}

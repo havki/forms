@@ -31,6 +31,9 @@ import BasicDatePicker from "./components/date/Date";
 import CheckboxLabels from "./components/checkboxes/Checkbox";
 import Text from "./components/text/Text";
 import RowRadioButtonsGroup from "./components/radio/Radio";
+import NewFieldInput from "./components/newFieldInput/NewFieldInput";
+import { useState } from "react";
+import ClearField from "./components/clearField/ClearField";
 
 function App() {
   const {
@@ -38,14 +41,20 @@ function App() {
     handleSubmit,
     register,
     formState: { errors },
-    getValues,
   } = useForm();
 
-  // var myDate = "Wed May 18 2022";
-  // console.log(Date.parse(myDate));
-// myDate = myDate.split("-");
-// var newDate = new Date( myDate[2], myDate[1] - 1, myDate[0]);
-// console.log(newDate.getTime());
+  const [name, setName] = useState("sad");
+  const [userInput, setUserInput] = useState([]);
+
+  const createInput = (createInput) => {
+    setUserInput([...userInput, createInput]);
+  };
+
+  const deleteInput = (id) => {
+    let filtered = userInput.filter((input) => input.id !== id);
+    console.log(filtered);
+    setUserInput((userInput) => filtered);
+  };
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
@@ -72,11 +81,29 @@ function App() {
               <Name control={control} errors={errors} />
               <Email control={control} errors={errors} />
               <Select control={control} errors={errors} />
-              <CheckboxLabels control={control} errors={errors} register={register} />
+              <CheckboxLabels
+                control={control}
+                errors={errors}
+                register={register}
+              />
               <Text control={control} errors={errors} />
               <RowRadioButtonsGroup control={control} errors={errors} />
               <BasicDatePicker control={control} errors={errors} />
 
+              {userInput.map((input) => {
+                return (
+                  <ClearField
+                    remove={deleteInput}
+                    control={control}
+                    errors={errors}
+                    name={input}
+                    key={input.id}
+                    id={input.id}
+                  />
+                );
+              })}
+
+              <NewFieldInput callback={createInput} create={setName} />
               <div className="label">
                 <Button variant="outlined" type="submit" size="large">
                   Submit button
@@ -91,96 +118,3 @@ function App() {
 }
 
 export default App;
-
-// {
-//   /* <Grid container direction="column" justifyContent="space-evenly" alignItems="center" spacing={1}>
-//  {components.map((item) => {
-//    return (
-//      <Grid item xs= {12} >
-//        {item}
-//      </Grid>
-//    );
-//  })}
-// </Grid> */
-// }
-
-// {components.map((item) => {
-//   return (
-//    <>
-//       {item}
-
-//    </>
-//   );
-// })}
-
-// <Controller
-//   rules={{ required: "Выберите что-то" }}
-//   name="checkbox"
-//   control={control}
-//   defaultValue=""
-//   render={({ field }) => (
-//     <FormControl
-//       error={!!errors.radioGroup?.message}
-//       variant="standard"
-//     >
-//       <FormLabel
-//         sx={{ textAlign: "left" }}
-//         id="demo-error-radios"
-//       >
-//         Ваш пол
-//       </FormLabel>
-//       <FormGroup
-//         row
-//         aria-labelledby="demo-row-radio-buttons-group-label"
-//         name="row-radio-buttons-group"
-//         value={field.value}
-//         onChange={(e) => field.onChange(e)}
-//       >
-//         <FormControlLabel
-//           value="Label 1"
-//           control={<Radio />}
-//           label="Label 1"
-//         />
-//         <FormControlLabel
-//           value="Label 2"
-//           control={<Radio />}
-//           label="Label 2"
-//         />
-//         <FormControlLabel
-//           value="Label 3"
-//           control={<Radio />}
-//           label="Label 3"
-//         />
-//       </FormGroup>
-//       {errors.radioGroup && (
-//         <FormHelperText>
-//           {errors.radioGroup?.message}
-//         </FormHelperText>
-//       )}
-//     </FormControl>
-//   )}
-// />
-
-// {["1", "2", "3"].map((item) => {
-//   return (
-//     <Controller
-//       // rules={{ required: false }}
-//       name={`cb${item}`}
-//       control={control}
-//       defaultValue={!!false}
-//       className="materialUIInput"
-//       render={({ field }) => (
-//         <FormControlLabel
-//           control={
-//             <Checkbox
-//               checked={field.value || ""}
-//               onChange={(e) => field.onChange(e)}
-//               defaultChecked
-//             />
-//           }
-//           label="Label"
-//         />
-//       )}
-//     />
-//   );
-// })}

@@ -41,19 +41,15 @@ export const textValidate = {
 export const dateValidate = {
   required: "Выберите дату",
   validate: (value) => {
-    console.log(value);
     const selectedDate = Date.parse(value);
-    console.log(Date.now() + ">" + selectedDate);
-
-    if(value.match(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/)){
-      return 'Неверный формат'
+    if (isNaN(selectedDate)) {
+      return "Введите верный формат";
     }
 
     if (selectedDate < Date.now() - 86400000) {
       return "Выберите дату наперёд";
     }
 
-    // console.log(selectedDate,Date.now());
     return true;
   },
 };
@@ -66,21 +62,3 @@ export const cbValidate = {
     return true;
   },
 };
-
-// var myDate = Date.parse("Thu May 12 2022");
-//     const selectedDate = Date.parse(value);
-
-//      let rounded =  myDate * 0.00001
-//      console.log(new Date(rounded));
-//      console.log(myDate +"="+rounded + '='+ selectedDate);
-
-//     // console.log(selectedDate, Date.parse(myDate));
-
-//     // let some = Date.now()-diff;
-//     // console.log(some);
-
-//     let diff = 0
-//     if(selectedDate < Date.now()){
-//       diff = Date.now()- selectedDate;
-//       // console.log('выбраная дата меньше на '+diff + ' c');
-//     }

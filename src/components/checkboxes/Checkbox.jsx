@@ -14,25 +14,11 @@ import { cbValidate } from "../Validation";
 export default function CheckboxLabels({
   control,
   errors,
-  getValues,
   register,
 }) {
-  const [state, setState] = React.useState({
-    gilad: true,
-    jason: false,
-    antoine: false,
-  });
-
-  const { gilad, jason, antoine } = state;
-
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-    });
-  };
-
   
+
+
   return (
     <div className="label">
       <Typography align="left" variant="subtitle1" gutterBottom component="div">
