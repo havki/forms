@@ -9,9 +9,18 @@ import CheckboxLabels from "./components/checkboxes/Checkbox";
 import Text from "./components/text/Text";
 import RowRadioButtonsGroup from "./components/radio/Radio";
 import NewFieldInput from "./components/newFieldInput/NewFieldInput";
-import { useState } from "react";
+import {useState } from "react";
 import ClearField from "./components/clearField/ClearField";
-import { current } from "@reduxjs/toolkit";
+
+const defaultValues = {
+  firstName: "",
+  email: "",
+  select: "",
+  checkbox: [],
+  text: "",
+  radioGroup: "",
+  date: "",
+};
 
 function App() {
   const {
@@ -19,11 +28,12 @@ function App() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+    getValues,
+    reset,
+  } = useForm(defaultValues);
 
-  const [name, setName] = useState("sad");
   const [userInput, setUserInput] = useState([]);
-  const [currentInput, setCurrentInput] = useState(null)
+  const [currentInput, setCurrentInput] = useState(null);
 
   const createInput = (createInput) => {
     setUserInput([...userInput, createInput]);
@@ -36,47 +46,42 @@ function App() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    alert(JSON.stringify(data, null, "\t"));
+    reset(defaultValues);
   };
 
-  const dragStartHandler = (e,input) => {
-    setCurrentInput(input)
-    console.log('drag',input);
-  }
-  const dragLeaveHandler = (e) => {
-    
-  }
+  const dragStartHandler = (e, input) => {
+    setCurrentInput(input);
+    console.log("drag", input);
+  };
+  const dragLeaveHandler = (e) => {};
   const dragOverHandler = (e) => {
-    e.preventDefault()
-    
-  }
-  const dragEndHanler = () => {
-    
-  }
-  const dropHandler = (e,input) => {
-    e.preventDefault()
-    console.log('drop',input);
-    setUserInput(userInput.map(i => {
-      if ( i.id === input.id ) {
-        return {...i,id: currentInput.id}
-      }
-      if (i.id === currentInput.id ) {
-        return {...i,id:input.id}
-      }
-      return i
-    }))
+    e.preventDefault();
+  };
+  const dragEndHanler = () => {};
+  const dropHandler = (e, input) => {
+    e.preventDefault();
+    console.log("drop", input);
+    setUserInput(
+      userInput.map((i) => {
+        if (i.id === input.id) {
+          return { ...i, id: currentInput.id };
+        }
+        if (i.id === currentInput.id) {
+          return { ...i, id: input.id };
+        }
+        return i;
+      })
+    );
+  };
 
-
-
-  }
-
-  const sortInputs = (a,b) => {
+  const sortInputs = (a, b) => {
     if (a.id > b.id) {
-      return 1
+      return 1;
     } else {
-      return -1
+      return -1;
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -107,44 +112,56 @@ function App() {
               <Text control={control} errors={errors} />
 
               <RowRadioButtonsGroup control={control} errors={errors} />
-              <BasicDatePicker control={control} errors={errors} />
-
-              <div draggable={true}>asdasdasd</div>
+              <BasicDatePicker
+                control={control}
+                errors={errors}
+                defaultDate={getValues}
+              />
 
               {userInput.sort(sortInputs).map((input) => {
                 return (
                   <div
                     className="label added"
-                    onDragStart={(e) => dragStartHandler(e,input)}
+                    onDragStart={(e) => dragStartHandler(e, input)}
                     onDragLeave={(e) => dragLeaveHandler(e)}
                     onDragOver={(e) => dragOverHandler(e)}
                     onDragEnd={(e) => dragEndHanler(e)}
-                    onDrop={(e) => dropHandler(e,input)}
+                    onDrop={(e) => dropHandler(e, input)}
                     draggable={true}
                     style={{ cursor: "grab" }}
                     key={input.id}
                   >
+                    <Stack direction='row' alignItems='center' justifyContent='space-between' >
                     <Typography
                       align="left"
                       variant="subtitle1"
                       gutterBottom
                       component="div"
                     >
-                      Empty Field
+                      {input.name}
                     </Typography>
+                    <div className="grab">
+
+                    </div>
+
+                    </Stack>
                     <ClearField
                       draggable={true}
                       remove={deleteInput}
                       control={control}
                       errors={errors}
-                      name={input}
+                      name={input.name}
                       id={input.id}
                     />
                   </div>
                 );
               })}
 
-              <NewFieldInput callback={createInput} create={setName} />
+              <NewFieldInput
+                callback={createInput}
+                arr={userInput}
+               
+              />
               <div className="label">
                 <Button
                   variant="contained"
@@ -155,6 +172,7 @@ function App() {
                   Submit button
                 </Button>
               </div>
+            
             </Stack>
           </form>
         </Box>

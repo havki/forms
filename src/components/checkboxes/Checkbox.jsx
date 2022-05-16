@@ -29,7 +29,7 @@ export default function CheckboxLabels({
       rules= {cbValidate}
       name= "checkbox"
       control = {control}
-      defaultValue={[]}
+      defaultValue={[] }
       render=  {({field})=>(
       <FormControl error={!!errors.checkbox?.message}>
         <FormLabel sx={{ textAlign: "left" }} component="legend">
@@ -37,15 +37,15 @@ export default function CheckboxLabels({
         </FormLabel>
         <FormGroup row>
           <FormControlLabel
-            control={<Checkbox {...register("checkbox")} value={"1"} />}
+            control={<Checkbox   {...register("checkbox")} value={"1"} />}
             label="Первый"
           />
           <FormControlLabel
-            control={<Checkbox {...register("checkbox")} value={"2"} />}
+            control={<Checkbox  {...register("checkbox")} value={"2"} />}
             label="Второй"
           />
           <FormControlLabel
-            control={<Checkbox {...register("checkbox")} value={"3"} />}
+            control={<Checkbox  {...register("checkbox")} value={"3"} />}
             label="Третий"
           />
         </FormGroup>
@@ -53,6 +53,7 @@ export default function CheckboxLabels({
           errors.checkbox &&
         <FormHelperText>{errors.checkbox.message}</FormHelperText>
         }
+
       </FormControl>
         
       )}

@@ -13,18 +13,18 @@ function ClearField({ control, errors, name, remove, id }) {
  
       <Controller
         rules={{ required: "Oбязательно для заполнения" }}
-        name={name.name + name.id}
+        name={name }
         control={control}
         defaultValue=""
         className="materialUIInput"
         render={({ field }) => (
           <TextField
             id="outlined-textarea"
-            label={name.name}
+            label={name}
             onChange={(e) => field.onChange(e)}
             value={field.value || ""}
-            error={!!errors[name.name + name.id]?.message}
-            helperText={errors[name.name + name.id]?.message}
+            error={!!errors[name ]?.message}
+            helperText={errors[name ]?.message}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">

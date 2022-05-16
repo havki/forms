@@ -7,7 +7,7 @@ import { dateValidate } from "../Validation";
 import { Controller } from "react-hook-form";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 
-function BasicDatePicker({ errors, control }) {
+function BasicDatePicker({ errors, control,defaultDate }) {
   return (
     <div className="label">
       <Typography align="left" variant="subtitle1" gutterBottom component="div">
@@ -22,7 +22,7 @@ function BasicDatePicker({ errors, control }) {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker
               label="Введите дату"
-              value={field.value}
+              value={field.value || null}
               onChange={(e) => field.onChange(e)}
               renderInput={(params) => (
                 <TextField
@@ -32,6 +32,7 @@ function BasicDatePicker({ errors, control }) {
                 />
               )}
               inputFormat="dd/MM/yyyy"
+              minDate={new Date()}
             />
             <FormHelperText sx={{ color: "#D32F2F" }}>
               {errors.date?.message}
