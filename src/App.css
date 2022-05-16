@@ -2,17 +2,26 @@
   text-align: center;
 }
 
-.flex{
-  display: flex ;
+.flex {
+  display: flex;
   justify-content: space-around;
 }
 
-.label{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  max-width:100%;
+.label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
 }
 .MuiInputBase-root {
-  background-color: #fff
+  background-color: #fff;
+}
+.added {
+  background-image: radial-gradient(
+    circle farthest-corner at center center,
+    #000000 0%,
+    #ffffff 50%
+  );
+  background-repeat: repeat;
+  background-size: 5px 5px;
 }

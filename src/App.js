@@ -1,5 +1,5 @@
 import "./App.css";
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import Name from "./components/name/Name";
 import Select from "./components/select/Select";
@@ -11,6 +11,7 @@ import RowRadioButtonsGroup from "./components/radio/Radio";
 import NewFieldInput from "./components/newFieldInput/NewFieldInput";
 import { useState } from "react";
 import ClearField from "./components/clearField/ClearField";
+import { current } from "@reduxjs/toolkit";
 
 function App() {
   const {
@@ -22,6 +23,7 @@ function App() {
 
   const [name, setName] = useState("sad");
   const [userInput, setUserInput] = useState([]);
+  const [currentInput, setCurrentInput] = useState(null)
 
   const createInput = (createInput) => {
     setUserInput([...userInput, createInput]);
@@ -34,20 +36,55 @@ function App() {
   };
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-
-
+    console.log(data);
   };
 
-  
- 
+  const dragStartHandler = (e,input) => {
+    setCurrentInput(input)
+    console.log('drag',input);
+  }
+  const dragLeaveHandler = (e) => {
+    
+  }
+  const dragOverHandler = (e) => {
+    e.preventDefault()
+    
+  }
+  const dragEndHanler = () => {
+    
+  }
+  const dropHandler = (e,input) => {
+    e.preventDefault()
+    console.log('drop',input);
+    setUserInput(userInput.map(i => {
+      if ( i.id === input.id ) {
+        return {...i,id: currentInput.id}
+      }
+      if (i.id === currentInput.id ) {
+        return {...i,id:input.id}
+      }
+      return i
+    }))
+
+
+
+  }
+
+  const sortInputs = (a,b) => {
+    if (a.id > b.id) {
+      return 1
+    } else {
+      return -1
+    }
+  }
+
   return (
     <div className="App">
-      <Container  maxWidth="xl" disableGutters>
+      <Container maxWidth="xl" disableGutters>
         <Box
           sx={{
             component: "form",
-            bgcolor: '#F9FAFC',
+            bgcolor: "#F9FAFC",
             height: "100%",
             display: "flex",
             flexDirection: "row",
@@ -68,25 +105,53 @@ function App() {
                 register={register}
               />
               <Text control={control} errors={errors} />
+
               <RowRadioButtonsGroup control={control} errors={errors} />
               <BasicDatePicker control={control} errors={errors} />
 
-              {userInput.map((input) => {
+              <div draggable={true}>asdasdasd</div>
+
+              {userInput.sort(sortInputs).map((input) => {
                 return (
-                  <ClearField
-                    remove={deleteInput}
-                    control={control}
-                    errors={errors}
-                    name={input}
+                  <div
+                    className="label added"
+                    onDragStart={(e) => dragStartHandler(e,input)}
+                    onDragLeave={(e) => dragLeaveHandler(e)}
+                    onDragOver={(e) => dragOverHandler(e)}
+                    onDragEnd={(e) => dragEndHanler(e)}
+                    onDrop={(e) => dropHandler(e,input)}
+                    draggable={true}
+                    style={{ cursor: "grab" }}
                     key={input.id}
-                    id={input.id}
-                  />
+                  >
+                    <Typography
+                      align="left"
+                      variant="subtitle1"
+                      gutterBottom
+                      component="div"
+                    >
+                      Empty Field
+                    </Typography>
+                    <ClearField
+                      draggable={true}
+                      remove={deleteInput}
+                      control={control}
+                      errors={errors}
+                      name={input}
+                      id={input.id}
+                    />
+                  </div>
                 );
               })}
 
               <NewFieldInput callback={createInput} create={setName} />
               <div className="label">
-                <Button variant="contained" sx={{borderRadius:'50px'}} type="submit" size="large">
+                <Button
+                  variant="contained"
+                  sx={{ borderRadius: "50px" }}
+                  type="submit"
+                  size="large"
+                >
                   Submit button
                 </Button>
               </div>

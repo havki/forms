@@ -10,11 +10,7 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 
 function ClearField({ control, errors, name, remove, id }) {
   return (
-    <div className="label">
-      <Typography align="left" variant="subtitle1" gutterBottom component="div">
-        Empty Field
-      </Typography>
-
+ 
       <Controller
         rules={{ required: "Oбязательно для заполнения" }}
         name={name.name + name.id}
@@ -44,7 +40,7 @@ function ClearField({ control, errors, name, remove, id }) {
           />
         )}
       />
-    </div>
+    
   );
 }
 
